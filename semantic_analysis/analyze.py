@@ -1,6 +1,8 @@
 from transformers import pipeline
 import spacy
 
+spacy.cli.download("en_core_web_sm")
+
 class SemanticAnalyzer:
     def __init__(self):
         try:

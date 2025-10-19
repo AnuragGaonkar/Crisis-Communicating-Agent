@@ -3,14 +3,16 @@ import os
 from dotenv import load_dotenv
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from web_search.search import WebSearchAgent
-
 import google.generativeai as genai
 
 class CrisisChatbot:
     def __init__(self):
         try:
-            load_dotenv()
-            api_key = os.getenv("GENIE_API_KEY")
+            if "GENIE_API_KEY" in st.secrets:
+                api_key = st.secrets["GENIE_API_KEY"]
+            else:
+                load_dotenv()
+                api_key = os.getenv("GENIE_API_KEY")
             genai.configure(api_key=api_key)  
             self.model = genai.GenerativeModel("gemini-2.5-pro")
             self.search_agent = WebSearchAgent()
